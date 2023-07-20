@@ -1,24 +1,88 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# テーブル設計
 
-Things you may want to cover:
+## users テーブル
 
-* Ruby version
 
-* System dependencies
+| Column             | Type   | Options                       |
+| ------------------ | ------ | ----------------------------- |
+| nickname           | string | null: false                   |
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false                   |
+| family_name        | string | null: false                   |
+| last_name          | string | null: false                   |
+| family_name_kana   | string | null: false                   |
+| first_name_kana    | string | null: false                   |
+| birthday           | date   | null: false                   |
 
-* Configuration
 
-* Database creation
+### Association
+# 一人のユーザーは複数の商品を出品できる
+has_many :items
+# 一人のユーザーは複数の購入履歴を持つ
+has_many :orders
 
-* Database initialization
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
 
-* ...
+## items テーブル
+
+
+| Column             | Type       | Options                        |
+| ------------------ | ---------  | ------------------------------ |
+| name               | string     | null: false                    |
+| description        | text       | null: false                    |
+| category_id        | integer    | null: false                    |
+| condition_id       | integer    | null: false                    |
+| shipping_method_id | integer    | null: false                    |
+| prefecture_id      | integer    | null: false                    |
+| days_to_ship_id    | integer    | null: false                    |
+| price              | integer    | null: false                    |
+| user               | references | null: false, foreign_key: true |
+
+
+### Association
+# 一つの商品は一つのユーザーに所属する
+belongs_to :user
+# 一つの商品は一つの発送履歴を持つ
+has_one :order
+
+
+
+## orders テーブル
+
+
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| user    | references | null: false, foreign_key: true |
+| item    | references | null: false, foreign_key: true |
+
+
+### Association
+# 購入履歴は一人のユーザーに何個も存在する
+belongs_to :user
+# 購入履歴は一つの商品につき一つずつ
+belongs_to :item
+# 購入履歴は一つの発送先を持つ
+has_one :address
+
+
+
+## addresses テーブル
+
+
+| Column          | Type       | Options                        |
+| --------------- | ---------- | ------------------------------ |
+| postal_code     | string     | null: false,                   |
+| prefecture_id   | integer    | null: false,                   |
+| city            | string     | null: false,                   |
+| street_address  | string     | null: false,                   |
+| building_name   | string     |                                |
+| phone_number    | string     | null: false,                   |
+| order           | references | null: false, foreign_key: true |
+
+
+# 発送先情報は一つの購入履歴に対して一つ
+belongs_to :order
