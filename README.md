@@ -8,7 +8,7 @@
 | Column             | Type   | Options                       |
 | ------------------ | ------ | ----------------------------- |
 | nickname           | string | null: false                   |
-| email              | string | null: false, uniqueness: true |
+| email              | string | null: false, unique: true |
 | encrypted_password | string | null: false                   |
 | family_name        | string | null: false                   |
 | last_name          | string | null: false                   |
@@ -77,10 +77,10 @@ has_one :address
 | --------------- | ---------- | ------------------------------ |
 | postal_code     | string     | null: false,                   |
 | prefecture_id   | integer    | null: false,                   |
-| city_id         | integer    | null: false,                   |
+| city            | string     | null: false,                   |
 | street_address  | string     | null: false,                   |
-| building_name   | string     | null: false,                   |
-| phone_number    | integer    | null: false,                   |
+| building_name   | string     |                                |
+| phone_number    | string     | null: false,                   |
 | order           | references | null: false, foreign_key: true |
 
 
