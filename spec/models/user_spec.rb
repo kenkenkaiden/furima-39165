@@ -45,15 +45,15 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)') 
       end
-      it 'passwordに全角文字が含まれていると登録できない' do
+      it 'passwordに全角文字が含まれていると登録できない' do #「パスワードは、半角英数字混合での入力が必須であること」のテスト
         @user.password = "Ａbc123" 
         @user.valid?
         expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください')
       end
-      it 'passwordが半角アルファベットだけでは登録できない' do
+      it 'passwordが半角アルファベットだけでは登録できない' do #「パスワードは、半角英数字混合での入力が必須であること」のテスト
         @user.password = "abcdef" 
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください')
+        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください') #「パスワードは、半角英数字混合での入力が必須であること」のテスト
       end
       it 'passwordが半角数字だけでは登録できない' do
         @user.password = "123456" 
@@ -65,10 +65,57 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
+
+      it 'family_nameが空では登録できない' do
+        @user.family_name = "" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name can't be blank")
+      end
+      it 'first_nameが空では登録できない' do
+        @user.first_name = "" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name can't be blank")
+      end
+      it 'family_nameで全角のアルファベット及び半角文字が使われていると登録できない' do # 「お名前(全角)は、全角（漢字・ひらがな・カタカナ）での入力が必須であること」のテスト
+        @user.family_name = "Ａa1ｱ" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name は全角（漢字・ひらがな・カタカナ）で入力してください")
+      end
+      it 'first_nameで全角のアルファベット及び半角文字が使われていると登録できない' do # 「お名前(全角)は、全角（漢字・ひらがな・カタカナ）での入力が必須であること」のテスト
+        @user.first_name = "Ａa1ｱ" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name は全角（漢字・ひらがな・カタカナ）で入力してください")
+      end
+      it 'family_name_kanaが空では登録できない' do
+        @user.family_name_kana = "" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name kana can't be blank")
+      end
+      it 'first_name_kanaが空では登録できない' do
+        @user.first_name_kana = "" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana can't be blank")
+      end
+      it 'family_name_kanaで全角カタカナ以外の文字が使われていると登録できない' do # 「お名前カナ(全角)は、全角（カタカナ）での入力が必須であること」のテスト
+        @user.family_name_kana = "Ａa1ｱあ亜" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name kana は全角（カタカナ）で入力してください")
+      end
+      it 'first_name_kanaで全角カタカナ以外の文字が使われていると登録できない' do # 「お名前カナ(全角)は、全角（カタカナ）での入力が必須であること」のテスト
+        @user.first_name_kana = "Ａa1ｱあ亜" 
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana は全角（カタカナ）で入力してください")
+      end
+      it 'birthdayが空だと登録できない' do
+        @user = FactoryBot.build(:user, birthday: nil)
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Birthday can't be blank")
+      end
     end
   end
 
   
+
 end
 
 
@@ -78,11 +125,7 @@ end
 
 
 #新規登録/本人情報確認
-# お名前(全角)は、名字と名前がそれぞれ必須であること。
-# お名前(全角)は、全角（漢字・ひらがな・カタカナ）での入力が必須であること。
-# お名前カナ(全角)は、名字と名前がそれぞれ必須であること。
-# お名前カナ(全角)は、全角（カタカナ）での入力が必須であること。
-# 生年月日が必須であること。
+
 #トップページ
 # ログアウト状態の場合には、トップページ（商品一覧ページ）のヘッダーに、「新規登録」「ログイン」ボタンが表示されること。
 # ログイン状態の場合には、トップページ（商品一覧ページ）のヘッダーに、「ユーザーのニックネーム」と「ログアウト」ボタンが表示されること。
