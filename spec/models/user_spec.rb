@@ -48,17 +48,17 @@ RSpec.describe User, type: :model do
       it 'passwordに全角文字が含まれていると登録できない' do #「パスワードは、半角英数字混合での入力が必須であること」のテスト
         @user.password = "Ａbc123" 
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください')
+        expect(@user.errors.full_messages).to include('Password には英字と数字の両方を含めて設定してください')
       end
       it 'passwordが半角アルファベットだけでは登録できない' do #「パスワードは、半角英数字混合での入力が必須であること」のテスト
         @user.password = "abcdef" 
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください') #「パスワードは、半角英数字混合での入力が必須であること」のテスト
+        expect(@user.errors.full_messages).to include('Password には英字と数字の両方を含めて設定してください') #「パスワードは、半角英数字混合での入力が必須であること」のテスト
       end
       it 'passwordが半角数字だけでは登録できない' do
         @user.password = "123456" 
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください')
+        expect(@user.errors.full_messages).to include('Password には英字と数字の両方を含めて設定してください')
       end
       it 'passwordとpassword_confirmationが不一致では登録できない' do
         @user.password_confirmation = ''
