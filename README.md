@@ -48,7 +48,14 @@ has_many :orders
 belongs_to :user
 # 一つの商品は一つの発送履歴を持つ
 has_one :order
+# 複数の商品が一つのカテゴリーに属している
+belongs_to :category
 
+//以下は補足
+//belongs_to :condition
+//belongs_to :shipping_method
+//belongs_to :prefecture
+//belongs_to :days_to_ships
 
 
 ## orders テーブル
@@ -84,5 +91,6 @@ has_one :address
 | order           | references | null: false, foreign_key: true |
 
 
+### Association
 # 発送先情報は一つの購入履歴に対して一つ
 belongs_to :order
