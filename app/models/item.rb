@@ -5,6 +5,7 @@ class Item < ApplicationRecord
   belongs_to :shipping_method
   belongs_to :prefecture
   belongs_to :days_to_ships
+  has_one_attached :image
 
   validates :name, presence: true
   validates :description, presence: true
@@ -14,4 +15,10 @@ class Item < ApplicationRecord
   validates :prefecture_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
   validates :days_to_ship_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
   validates :price, presence: true
+
+  private
+  
+  def message_params
+    params.require(:item).permit(:)
+  end
 end

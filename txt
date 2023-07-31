@@ -16,6 +16,7 @@
                                       POST   /users(.:format)                                                                         devise/registrations#create
                                  root GET    /                                                                                        items#index
                                 items GET    /items(.:format)                                                                         items#index
+                                      POST   /items(.:format)                                                                         items#create
                              new_item GET    /items/new(.:format)                                                                     items#new
         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
