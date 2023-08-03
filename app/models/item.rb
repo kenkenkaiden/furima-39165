@@ -14,11 +14,7 @@ class Item < ApplicationRecord
   validates :shipping_method_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
   validates :prefecture_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
   validates :days_to_ship_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :price, presence: true
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
 
-  private
-  
-  def message_params
-    params.require(:item).permit(:)
-  end
+
 end
