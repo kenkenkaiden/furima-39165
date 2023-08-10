@@ -10,16 +10,16 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
   validates :description, presence: true
-  validates :category_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :condition_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :shipping_method_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :prefecture_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :days_to_ship_id, presence: true, numericality: { other_than: 1 , message: "can't be blank"}
+  validates :category_id, presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :condition_id, presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :shipping_method_id, presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :prefecture_id, presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :days_to_ship_id, presence: true, numericality: { other_than: 1, message: "can't be blank" }
   validates :price, presence: true, numericality: {
-                                      greater_than_or_equal_to: 300,
-                                      less_than_or_equal_to: 9999999,
-                                      only_integer: true,
-                                      message: "は¥300〜¥9,999,999の間の半角数値で入力してください"
-                                    }
+    greater_than_or_equal_to: 300,
+    less_than_or_equal_to: 9_999_999,
+    only_integer: true,
+    message: 'は¥300〜¥9,999,999の間の半角数値で入力してください'
+  }
   validates :image, presence: true
 end
