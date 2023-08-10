@@ -32,8 +32,18 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
+      it 'カテゴリー（:category_id）で初期値の「---」を選ぶと出品できないこと' do
+        @item.category_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category can't be blank")
+      end
       it '商品の状態（:condition_id）の情報が必須であること' do
         @item.condition_id = ''
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition can't be blank")
+      end
+      it '商品の状態（:condition_id）で初期値の「---」を選ぶと出品できないこと' do
+        @item.condition_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
@@ -42,8 +52,18 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping method can't be blank")
       end
+      it '配送料の負担（:shipping_method_id）で初期値の「---」を選ぶと出品できないこと' do
+        @item.shipping_method_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping method can't be blank")
+      end
       it '発送元の地域（:prefecture_id）の情報が必須であること' do
         @item.prefecture_id = ''
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+      end
+      it '発送元の地域（:prefecture_id）で初期値の「---」を選ぶと出品できないこと' do
+        @item.prefecture_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
@@ -66,6 +86,11 @@ RSpec.describe Item, type: :model do
         @item.price = '１２３４５６'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price は¥300〜¥9,999,999の間の半角数値で入力してください')
+      end
+      it 'ユーザー（:user）が紐付いていなければ出品できないこと' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
