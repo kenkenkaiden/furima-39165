@@ -15,6 +15,9 @@
                                       DELETE /users(.:format)                                                                         devise/registrations#destroy
                                       POST   /users(.:format)                                                                         devise/registrations#create
                                  root GET    /                                                                                        items#index
+                          item_orders GET    /items/:item_id/orders(.:format)                                                         orders#index
+                                      POST   /items/:item_id/orders(.:format)                                                         orders#create
+                       new_item_order GET    /items/:item_id/orders/new(.:format)                                                     orders#new
                                 items GET    /items(.:format)                                                                         items#index
                                       POST   /items(.:format)                                                                         items#create
                              new_item GET    /items/new(.:format)                                                                     items#new

@@ -32,7 +32,7 @@
 
 
     <% if (user_signed_in?) && (current_user != @item.user) %> <%# 商品が売れていない場合に表示させる処理 %>
-    <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
+    <%= link_to "購入画面に進む", item_orders_path(@item) ,class:"item-red-btn"%>
     <% end %>
 
     <div class="item-explain-box">
