@@ -44,7 +44,7 @@ RSpec.describe OrderAddress, type: :model do
       end
 
       it 'prefecture_id(都道府県)の選択肢が"---"では購入できない' do
-        @order_address.prefecture_id = '---'
+        @order_address.prefecture_id = 0
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Prefecture can't be blank")
       end
@@ -83,6 +83,18 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.phone_number = '123-456-7890'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number は、10桁以上11桁以内の半角数値で入力してください。')
+      end
+
+      it 'userが紐づいていなければ場合は購入できない' do
+        @order_address.user_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'itemが紐づいていなければ場合は購入できない' do
+        @order_address.item_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
