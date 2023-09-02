@@ -6,13 +6,10 @@ class OrdersController < ApplicationController
     if (current_user == @item.user) || (Order.exists?(item_id: @item.id))
       redirect_to root_path
     end
-    
+
     @order_address = OrderAddress.new
   end
 
-  def new
-    @order_address = OrderAddress.new
-  end
 
   def create
     @item = Item.find(params[:item_id])
@@ -33,7 +30,7 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order_address).permit(:postal_code, :prefecture_id, :city, :street_address, :building_name,
-                                          :phone_number).merge(token: params[:token])
+                                          :phone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
   def pay_item

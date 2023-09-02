@@ -8,6 +8,8 @@ class OrderAddress
     validates :city
     validates :street_address
     validates :phone_number, format: { with: /\A[0-9]{10,11}\z/, message: 'は、10桁以上11桁以内の半角数値で入力してください。' }
+    validates :user_id
+    validates :item_id
     validates :token
   end
 
